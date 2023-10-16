@@ -1,12 +1,13 @@
 from typing import Annotated
 
 from fastapi import FastAPI
-from .modules.chat.router import router
+from app.modules import chat_router, sql_router
 
 app = FastAPI()
 
 
-app.include_router(router)
+app.include_router(chat_router)
+app.include_router(sql_router)
 
 
 @app.get("/")
