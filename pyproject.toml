@@ -12,6 +12,14 @@ uvicorn = "^0.23.2"
 python-jose = "^3.3.0"
 pydantic-settings = "^2.0.3"
 
+[tool.poetry.group.dev.dependencies]
+black = {extras = ["d"], version = "^23.9.1"}
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+
 
 [build-system]
 requires = ["poetry-core"]
