@@ -11,6 +11,7 @@ fastapi = "^0.103.2"
 uvicorn = "^0.23.2"
 python-jose = "^3.3.0"
 pydantic-settings = "^2.0.3"
+openai = "^0.28.1"
 
 [tool.poetry.group.dev.dependencies]
 black = {extras = ["d"], version = "^23.9.1"}
