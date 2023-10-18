@@ -1,13 +1,9 @@
-from typing import Annotated
-
 from fastapi import FastAPI
-from app.modules import chat_router, sql_router
+from app.modules import api
 
 app = FastAPI()
 
-
-app.include_router(chat_router)
-app.include_router(sql_router)
+app.include_router(api)
 
 
 @app.get("/")
