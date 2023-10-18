@@ -1,0 +1,15 @@
+meta {
+  name: Health
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BACKEND_URL}}/health
+  body: none
+  auth: bearer
+}
+
+docs {
+  Health check
+}
