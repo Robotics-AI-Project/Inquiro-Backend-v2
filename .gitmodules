@@ -1,3 +1,4 @@
 [submodule "prisma"]
 	path = prisma
 	url = git@github.com:Robotics-AI-Project/Inquiro-Prisma.git
+	branch = main
