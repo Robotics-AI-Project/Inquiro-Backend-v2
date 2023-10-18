@@ -1,9 +1,20 @@
 from fastapi import FastAPI
 from app.modules import api
+from app.utils import prisma
 
 app = FastAPI()
 
 app.include_router(api)
+
+
+@app.on_event("startup")
+async def startup():
+    await prisma.connect()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    await prisma.disconnect()
 
 
 @app.get("/")
