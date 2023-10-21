@@ -1,19 +1,15 @@
 meta {
-  name: Health
+  name: Get all snippets
   type: http
   seq: 1
 }
 
 get {
-  url: {{BACKEND_URL}}/health
+  url: {{BACKEND_URL}}/api/snippet
   body: none
   auth: bearer
 }
 
 auth:bearer {
   token: {{TOKEN}}
-}
-
-docs {
-  Health check
 }
