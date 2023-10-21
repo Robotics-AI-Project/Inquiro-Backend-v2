@@ -18,9 +18,11 @@ fastapi-sso = "^0.7.2"
 fastapi-nextauth-jwt = "^1.1.2"
 firebase-admin = "^6.2.0"
 pydantic = {extras = ["email"], version = "^2.4.2"}
+together = "^0.2.5"
 
 [tool.poetry.group.dev.dependencies]
 black = {extras = ["d"], version = "^23.9.1"}
+jupyter = "^1.0.0"
 
 [tool.black]
 line-length = 88
