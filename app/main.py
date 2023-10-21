@@ -1,20 +1,42 @@
-from fastapi import FastAPI
+from typing import Annotated
+
+from fastapi import FastAPI, Depends
+from starlette.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+import firebase_admin as fb
+from firebase_admin import credentials
+from firebase_admin import auth
+
 from app.modules import api
-from app.utils import prisma
+from app.lifecycle import register_startup_event, register_shutdown_event
 
 app = FastAPI()
 
+origins = ["http://localhost:3000", "http://localhost"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+register_startup_event(app)
+register_shutdown_event(app)
+
+
 app.include_router(api)
 
-
-@app.on_event("startup")
-async def startup():
-    await prisma.connect()
+security = HTTPBearer()
 
 
-@app.on_event("shutdown")
-async def shutdown():
-    await prisma.disconnect()
+@app.get("/test")
+async def test_token(
+    credential: Annotated[HTTPAuthorizationCredentials, Depends(security)]
+):
+    decoded_token = auth.verify_id_token(credential.credentials)
+    return {"message": decoded_token}
 
 
 @app.get("/")
@@ -25,8 +47,3 @@ async def root():
 @app.get("/health")
 async def health():
     return {"message": "OK"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}

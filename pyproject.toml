@@ -13,6 +13,11 @@ python-jose = "^3.3.0"
 pydantic-settings = "^2.0.3"
 openai = "^0.28.1"
 prisma = "^0.10.0"
+itsdangerous = "^2.1.2"
+fastapi-sso = "^0.7.2"
+fastapi-nextauth-jwt = "^1.1.2"
+firebase-admin = "^6.2.0"
+pydantic = {extras = ["email"], version = "^2.4.2"}
 
 [tool.poetry.group.dev.dependencies]
 black = {extras = ["d"], version = "^23.9.1"}
