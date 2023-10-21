@@ -1,75 +1,71 @@
 generator client {
-    provider  = "prisma-client-py"
-    interface = "asyncio"
+  provider  = "prisma-client-py"
+  interface = "asyncio"
 }
 
 datasource db {
-    provider     = "mysql"
-    url          = env("DATABASE_URL")
-    relationMode = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 enum Agent {
-    CHATBOT
-    USER
+  CHATBOT
+  USER
 }
 
 model User {
-    id         String       @id @default(uuid())
-    uid        String       @map("user_id")
-    name       String
-    username   String?
-    email      String       @unique
-    image      String?
-    provider   String?
-    Datasource Datasource[]
-    Chat       Chat[]
-    ChatLog    ChatLog[]
-    createdAt  DateTime     @default(now()) @map("created_at")
-    updatedAt  DateTime     @updatedAt @map("updated_at")
+  id         String       @id @default(uuid())
+  uid        String       @map("user_id")
+  name       String
+  username   String?
+  email      String       @unique
+  image      String?
+  provider   String?
+  Datasource Datasource[]
+  Chat       Chat[]
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
 
-    @@map("user")
+  @@map("user")
 }
 
 model Datasource {
-    id        String   @id @default(uuid())
-    name      String
-    engine    String
-    userId    String   @map("user_id")
-    url       String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    User      User     @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  name      String
+  engine    String
+  userId    String   @map("user_id")
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id])
 
-    @@index([userId])
-    @@map("datasource")
+  @@index([userId])
+  @@map("datasource")
 }
 
 model Chat {
-    id        String    @id @default(uuid())
-    name      String
-    userId    String    @map("user_id")
-    createdAt DateTime  @default(now()) @map("created_at")
-    updatedAt DateTime  @updatedAt @map("updated_at")
-    User      User      @relation(fields: [userId], references: [id])
-    ChatLog   ChatLog[]
+  id        String    @id @default(uuid())
+  name      String?
+  userId    String    @map("user_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  User      User      @relation(fields: [userId], references: [id])
+  ChatLog   ChatLog[]
 
-    @@index([userId])
-    @@map("chat")
+  @@index([userId])
+  @@map("chat")
 }
 
 model ChatLog {
-    id        String   @id @default(uuid())
-    message   String
-    agent     Agent
-    userId    String   @map("user_id")
-    chatId    String   @map("chat_id")
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
-    chat      Chat     @relation(fields: [chatId], references: [id])
-    User      User     @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  message   String
+  agent     Agent
+  chatId    String   @map("chat_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  chat      Chat     @relation(fields: [chatId], references: [id])
 
-    @@index([userId])
-    @@index([chatId])
-    @@map("chat_log")
+  @@index([chatId])
+  @@map("chat_log")
 }
