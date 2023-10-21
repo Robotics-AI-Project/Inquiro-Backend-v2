@@ -1,13 +1,13 @@
 import openai
-
-from app.config import settings
 from app.utils.llm import LLMModel
 
 
-class GPT4(LLMModel):
+class GPT35Turbo(LLMModel):
+    name = "GPT-3.5-turbo"
+
     def generate(self, prompt: str, *args, **kwargs) -> str:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo-16k",
             messages=[{"role": "user", "content": prompt}],
             n=1,
             stream=False,

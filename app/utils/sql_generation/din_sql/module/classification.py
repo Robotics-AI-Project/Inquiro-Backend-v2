@@ -1,4 +1,4 @@
-from app.utils.llm import get_model
+from app.utils.llm import model
 from app.utils.sql_generation.din_sql.utils.helper import (
     get_database_fields,
     get_database_foreign_keys,
@@ -77,12 +77,11 @@ Label: "NESTED"""
 
 def classify_generation(question, database, schema_links):
     prompt = classification_prompt_maker(question, database, schema_links)
-    model = get_model("GPT-4")
-    classification_result = model.generate(prompt, stop=["Q:"])
-    classification = (
-        classification_result.split("Label: ")[1].replace("\\", "").replace('"', "")
-    )
-    return classification
+    # classification_result = model.generate(prompt, stop=["Q:"])
+    # classification = (
+    #     classification_result.split("Label: ")[1].replace("\\", "").replace('"', "")
+    # )
+    return prompt
 
 
 def classification_prompt_maker(question, database, schema_links):

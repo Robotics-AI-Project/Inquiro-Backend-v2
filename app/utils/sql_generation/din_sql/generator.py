@@ -10,7 +10,7 @@ class DINSQLGenerator(Generator):
     #     self.db_url = db_url
 
     def generate_sql(self, prompt: str) -> str:
-        schema_links = get_schema_links(prompt, "")
-        # schema_links = "[singer.*]"
-        # classification = classify_generation(prompt, "", schema_links)
-        return schema_links
+        # schema_links = get_schema_links(prompt, "")
+        schema_links = "[singer.*]"
+        classification = classify_generation(prompt, "", schema_links)
+        return classification

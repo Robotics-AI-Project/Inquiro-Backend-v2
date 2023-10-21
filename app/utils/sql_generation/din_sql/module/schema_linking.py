@@ -1,4 +1,3 @@
-from app.utils.llm import get_model
 from app.utils.sql_generation.din_sql.utils.helper import (
     get_database_foreign_keys,
     get_database_fields,
@@ -94,11 +93,11 @@ Schema_links: [teaches.id,teaches.semester,teaches.year,Fall,2009,Spring,2010]
 
 
 def get_schema_links(question, database):
-    model = get_model("GPT-4")
+    # model = get_model("GPT-4")
     prompt = schema_linking_prompt_maker(question, database)
-    full_schema_links_result = model.generate(prompt, stop=["Q:"])
-    schema_links = full_schema_links_result.split("Schema_links: ")[1]
-    return schema_links
+    # full_schema_links_result = model.generate(prompt, stop=["Q:"])
+    # schema_links = full_schema_links_result.split("Schema_links: ")[1]
+    return prompt
 
 
 def schema_linking_prompt_maker(question, database):

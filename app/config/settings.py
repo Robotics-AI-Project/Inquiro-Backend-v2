@@ -11,6 +11,7 @@ class AppSettings(BaseSettings):
 
     DATABASE_URL: MySQLDsn
     OPENAI_API_KEY: str
+    TOGETHER_API_KEY: str
     FIREBASE_PROJECT_ID: str
     FIREBASE_PRIVATE_KEY_ID: str
     FIREBASE_PRIVATE_KEY: str
@@ -21,3 +22,4 @@ class AppSettings(BaseSettings):
 settings = AppSettings()
 
 os.environ["OPENAI_API_KEY"] = settings.OPENAI_API_KEY
+os.environ["TOGETHER_API_KEY"] = settings.TOGETHER_API_KEY
