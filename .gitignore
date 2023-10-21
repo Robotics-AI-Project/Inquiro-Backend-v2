@@ -225,4 +225,5 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-**/*.ipynb
+# ignore all jupyter notebook files, not just checkpoints
+*.ipynb
