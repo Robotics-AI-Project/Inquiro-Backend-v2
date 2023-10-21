@@ -11,7 +11,7 @@ router = APIRouter(prefix="/inference", tags=["inference"])
 async def generate_sql(body: GenerateSQLDTO):
     try:
         model.set_model(body.model)
-        generator = get_generator(body.generation_type)
+        generator = get_generator(body.generationType)
         result = generator.generate_sql(body.prompt)
         return {"message": result}
     except Exception as e:
