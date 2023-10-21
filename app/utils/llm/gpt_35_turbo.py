@@ -5,9 +5,6 @@ from app.utils.llm import LLMModel
 
 
 class GPT35Turbo(LLMModel):
-    def __init__(self):
-        openai.api_key = settings.openai_api_key
-
     def generate(self, prompt: str, *args, **kwargs) -> str:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k",
