@@ -1,0 +1,22 @@
+meta {
+  name: Create chat log
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{BACKEND_URL}}/api/chat/f874ad51-dabd-4fc3-ba3b-2eed25264234
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "message": "Hola",
+    "agent": "CHATBOT"
+  }
+}
