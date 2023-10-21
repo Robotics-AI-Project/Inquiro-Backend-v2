@@ -1,16 +1,16 @@
-from fastapi import APIRouter, Depends
-from starlette.requests import Request
+from typing import Annotated
 
-from app.dependencies import get_auth_header, AuthPayload
+from fastapi import APIRouter, Depends
+from prisma.models import User
+
+from app.dependencies.auth import get_user
 
 router = APIRouter(
     prefix="/snippet",
     tags=["snippet"],
-    dependencies=[Depends(get_auth_header)],
 )
 
 
 @router.get("/")
-async def root(request: Request):
-    payload: AuthPayload = request.state.payload
-    return {"message": payload["user_id"]}
+async def root(user: Annotated[User, Depends(get_user)]):
+    return {"message": user}
