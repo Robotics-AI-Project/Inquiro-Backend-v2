@@ -1,14 +1,11 @@
-from typing import Annotated
+import importlib.metadata
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
+from fastapi.security import HTTPBearer
 from starlette.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-import firebase_admin as fb
-from firebase_admin import credentials
-from firebase_admin import auth
 
-from app.modules import api
 from app.lifecycle import register_startup_event, register_shutdown_event
+from app.modules import api
 
 app = FastAPI()
 
@@ -31,19 +28,12 @@ app.include_router(api)
 security = HTTPBearer()
 
 
-@app.get("/test")
-async def test_token(
-    credential: Annotated[HTTPAuthorizationCredentials, Depends(security)]
-):
-    decoded_token = auth.verify_id_token(credential.credentials)
-    return {"message": decoded_token}
-
-
 @app.get("/")
-async def root():
-    return {"message": "Hello, world!"}
+async def get_version():
+    version = importlib.metadata.version("fastapi")
+    return {"message": version}
 
 
 @app.get("/health")
-async def health():
+async def health_check():
     return {"message": "OK"}
