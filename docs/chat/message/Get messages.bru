@@ -1,0 +1,15 @@
+meta {
+  name: Get messages
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BACKEND_URL}}/api/chat/{{CHAT_ID}}/message
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}

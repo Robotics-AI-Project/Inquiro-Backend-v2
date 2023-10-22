@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "inquiro-backend-v2"
+name = "Inquiro"
 version = "0.1.0"
-description = ""
+description = "Backend APIs for Inquiro Text-to-SQL Application"
 authors = ["tontan2545 <tontan2545@gmail.com>"]
 readme = "README.md"
 

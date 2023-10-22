@@ -1,11 +1,11 @@
 meta {
-  name: Create chat log
+  name: Create message
   type: http
-  seq: 4
+  seq: 2
 }
 
 post {
-  url: {{BACKEND_URL}}/api/chat/f874ad51-dabd-4fc3-ba3b-2eed25264234
+  url: {{BACKEND_URL}}/api/chat/{{CHAT_ID}}/message
   body: json
   auth: bearer
 }

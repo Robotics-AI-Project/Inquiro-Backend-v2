@@ -1,0 +1,21 @@
+meta {
+  name: Update chat
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{BACKEND_URL}}/api/chat/{{CHAT_ID}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "name": "Hello"
+  }
+}
