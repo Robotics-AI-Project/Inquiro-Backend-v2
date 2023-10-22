@@ -51,15 +51,15 @@ model Chat {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   User      User      @relation(fields: [userId], references: [id])
-  ChatLog   ChatLog[]
+  Message   Message[]
 
   @@index([userId])
   @@map("chat")
 }
 
-model ChatLog {
+model Message {
   id        String   @id @default(uuid())
-  message   String
+  content   String
   agent     Agent
   chatId    String   @map("chat_id")
   createdAt DateTime @default(now()) @map("created_at")
@@ -67,5 +67,5 @@ model ChatLog {
   chat      Chat     @relation(fields: [chatId], references: [id])
 
   @@index([chatId])
-  @@map("chat_log")
+  @@map("message")
 }
