@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from prisma.models import User
 
-from app.modules.chat.dto import UpdateChatDTO
+from app.modules.chat.dto import UpdateChatDTO, CreateChatDTO
 from app.utils import prisma
 
 from app.dependencies.auth import get_user
@@ -25,9 +25,12 @@ async def get_all_chats(user: Annotated[User, Depends(get_user)], n: int = 10):
 
 
 @router.post("/")
-async def create_chat(user: Annotated[User, Depends(get_user)]):
+async def create_chat(user: Annotated[User, Depends(get_user)], body: CreateChatDTO):
     try:
         chat = await prisma.chat.create(data={"userId": user.id})
+        await prisma.message.create(
+            data={"chatId": chat.id, "message": body.message, "agent": body.agent}
+        )
         return chat
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
