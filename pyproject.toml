@@ -23,12 +23,17 @@ together = "^0.2.5"
 [tool.poetry.group.dev.dependencies]
 black = {extras = ["d"], version = "^23.9.1"}
 jupyter = "^1.0.0"
+isort = "^5.12.0"
 
 [tool.black]
 line-length = 88
 target-version = ['py311']
 include = '\.pyi?$'
 
+[tool.isort]
+py_version=311
+profile = "black"
+src_paths = ["app"]
 
 [build-system]
 requires = ["poetry-core"]

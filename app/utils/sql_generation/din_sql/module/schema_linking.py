@@ -101,7 +101,7 @@ def get_schema_links(question, database):
 
 
 def schema_linking_prompt_maker(question, database):
-    instruction = "# Find the schema_links for generating SQL queries for each question based on the database schema and Foreign keys."
+    instruction = "# Find the schema_links for generating SQL queries for each question based on the database schemas and Foreign keys."
     fields = get_database_fields(database)
     foreign_keys = get_database_foreign_keys(database)
     prompt = f"""{instruction}

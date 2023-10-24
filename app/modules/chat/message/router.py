@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
+from prisma.models import Message
+
 from app.modules.chat.message.dto import CreateMessageDTO
 from app.utils import prisma
 
@@ -10,18 +12,18 @@ router = APIRouter(
 
 
 @router.get("/")
-async def get_messages(chat_id: str):
+async def get_messages(chat_id: str) -> list[Message]:
     try:
-        chat = await prisma.message.find_many(
+        messages = await prisma.message.find_many(
             where={"chatId": chat_id}, order={"createdAt": "asc"}
         )
-        return chat
+        return messages
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.post("/")
-async def create_message(chat_id: str, body: CreateMessageDTO):
+async def create_message(chat_id: str, body: CreateMessageDTO) -> Message:
     try:
         async with prisma.tx() as transaction:
             chat = await transaction.message.create(

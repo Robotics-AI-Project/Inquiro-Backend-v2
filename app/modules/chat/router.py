@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
-from prisma.models import User
+from prisma.models import User, Chat
 
 from app.modules.chat.dto import UpdateChatDTO, CreateChatDTO
 from app.utils import prisma
@@ -14,7 +14,9 @@ router.include_router(message_router)
 
 
 @router.get("/")
-async def get_all_chats(user: Annotated[User, Depends(get_user)], n: int = 10):
+async def get_all_chats(
+    user: Annotated[User, Depends(get_user)], n: int = 10
+) -> list[Chat]:
     try:
         chats = await prisma.chat.find_many(
             where={"userId": user.id},
@@ -27,7 +29,7 @@ async def get_all_chats(user: Annotated[User, Depends(get_user)], n: int = 10):
 
 
 @router.get("/{chat_id}", dependencies=[Depends(get_user)])
-async def get_chat(chat_id: str):
+async def get_chat(chat_id: str) -> Chat:
     try:
         chat = await prisma.chat.find_unique(where={"id": chat_id})
         return chat
@@ -36,7 +38,9 @@ async def get_chat(chat_id: str):
 
 
 @router.post("/")
-async def create_chat(body: CreateChatDTO, user: Annotated[User, Depends(get_user)]):
+async def create_chat(
+    body: CreateChatDTO, user: Annotated[User, Depends(get_user)]
+) -> Chat:
     try:
         async with prisma.tx() as transaction:
             chat = await transaction.chat.create(
@@ -52,7 +56,7 @@ async def create_chat(body: CreateChatDTO, user: Annotated[User, Depends(get_use
 
 
 @router.patch("/{chat_id}", dependencies=[Depends(get_user)])
-async def update_chat(chat_id: str, body: UpdateChatDTO):
+async def update_chat(chat_id: str, body: UpdateChatDTO) -> Chat:
     try:
         chat = await prisma.chat.update(where={"id": chat_id}, data={"name": body.name})
         return chat

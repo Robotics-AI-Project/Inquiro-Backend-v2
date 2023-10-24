@@ -222,7 +222,7 @@ poetry.toml
 # ruff
 .ruff_cache/
 
-# LSP config files
+# LSP configs files
 pyrightconfig.json
 
 # ignore all jupyter notebook files, not just checkpoints
