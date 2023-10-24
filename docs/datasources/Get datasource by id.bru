@@ -1,0 +1,15 @@
+meta {
+  name: Get datasource by id
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BACKEND_URL}}/api/datasource/{{DATASOURCE_ID}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}

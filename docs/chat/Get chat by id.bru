@@ -1,0 +1,11 @@
+meta {
+  name: Get chat by id
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BACKEND_URL}}/api/chat/{{CHAT_ID}}
+  body: none
+  auth: none
+}

@@ -4,5 +4,5 @@ from typing import Literal
 
 @dataclass
 class CreateMessageDTO:
-    message: str
+    content: str
     agent: Literal["USER"] | Literal["CHATBOT"]

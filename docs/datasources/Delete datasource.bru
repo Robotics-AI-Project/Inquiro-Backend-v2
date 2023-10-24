@@ -1,0 +1,15 @@
+meta {
+  name: Delete datasource
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{BACKEND_URL}}/api/datasource/{{DATASOURCE_ID}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}

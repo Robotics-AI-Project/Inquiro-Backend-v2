@@ -7,6 +7,7 @@ class UpdateChatDTO:
     name: str | None = None
 
 
+@dataclass
 class CreateChatDTO:
     message: str
     agent: Literal["USER"] | Literal["CHATBOT"] = "USER"

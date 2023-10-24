@@ -24,15 +24,6 @@ async def get_all_datasource(user: Annotated[User, Depends(get_user)]):
         return []
 
 
-@router.delete("/{datasource_id}")
-async def delete_datasource(datasource_id: int, _: Annotated[User, Depends(get_user)]):
-    try:
-        datasource = await prisma.datasource.delete(where={"id": datasource_id})
-        return datasource
-    except PrismaError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-
 @router.post("/")
 async def create_datasource(
     body: CreateDatasourceDTO, user: Annotated[User, Depends(get_user)]
@@ -46,6 +37,24 @@ async def create_datasource(
                 "url": body.url,
             }
         )
+        return datasource
+    except PrismaError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.get("/{datasource_id}", dependencies=[Depends(get_user)])
+async def get_datasource_by_id(datasource_id: int):
+    try:
+        datasource = await prisma.datasource.find_unique(where={"id": datasource_id})
+        return datasource
+    except PrismaError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.delete("/{datasource_id}", dependencies=[Depends(get_user)])
+async def delete_datasource(datasource_id: int):
+    try:
+        datasource = await prisma.datasource.delete(where={"id": datasource_id})
         return datasource
     except PrismaError as e:
         raise HTTPException(status_code=400, detail=str(e))
